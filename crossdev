@@ -303,7 +303,7 @@ parse_target() {
 			;;
 
 		# Bare metal targets
-		*-newlib|*-elf|*-eabi)
+		*-newlib|*-elf|*-eabi|*-eabihf)
 			LPKG="newlib"
 			KPKG="[none]"
 			STAGE_DEFAULT=${STAGE_LIBC}
@@ -383,7 +383,7 @@ parse_target() {
 		#      at least on i686-w64-mingw32 and x86_64-w64-mingw32
 		mingw*|*-mingw*) pie_support=no;;
 		# Many bare-metal targets don't work with pie as-is
-		*-elf|*-eabi)
+		*-elf|*-eabi|*-eabihf)
 			# mips can't generate freestanding PIC:
 			#   cc1: error: position-independent code requires ‘-mabicalls’
 			# arm firmware packages don't expect pie-by-default:
@@ -1236,7 +1236,7 @@ set_portage() {
 		# libgcc for all sub-architectures #378387
 		avr*)   set_use_force ${pkg} multilib
 			set_use_mask ${pkg} -multilib;;
-		*-newlib|*-elf|*-eabi)
+		*-newlib|*-elf|*-eabi|*-eabihf)
 			set_use_force ${pkg} multilib;
 			set_use_mask ${pkg} -multilib;;
 		*)      set_use_force ${pkg} -multilib;;
